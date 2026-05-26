@@ -38,7 +38,7 @@ export function Hero() {
   });
 
   return (
-    <section id="hero" className="relative hero-dots" ref={heroRef}>
+    <section id="hero" className="relative" ref={heroRef}>
       <HeroBlob />
 
       <div className="hero-stage mx-auto max-w-7xl px-5 md:px-10 pt-8 md:pt-14 pb-14 md:pb-20 relative flex items-center">
