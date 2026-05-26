@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── CSS custom properties ── */
+:root {
+  --cream:        #FFF8F0;
+  --cream-deeper: #F8EFDF;
+  --teal:         #0FB5B0;
+  --teal-dark:    #0A8A86;
+  --royal:        #1E5BBA;
+  --magenta:      #E91E63;
+  --gold:         #FFC107;
+  --ink:          #1A1A2E;
+  --ink-soft:     #4A4A5E;
+  --ink-mute:     #7A7A8E;
+}
+
+html,
+body {
+  background: var(--cream);
+  color: var(--ink);
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--magenta);
+  color: #fff;
+}
+
+/* Anchor scroll offset so fixed nav doesn't cover section headings */
+section[id] {
+  scroll-margin-top: 84px;
+}
