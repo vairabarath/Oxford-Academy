@@ -18,7 +18,7 @@ export function SpokenEnglishBand() {
   return (
     <section aria-label="Spoken English for all" className="english-band relative">
       {/* Headline */}
-      <div className="relative z-10 mx-auto max-w-5xl px-5 md:px-8 py-20 md:py-28 text-center">
+      <div className="relative z-10 mx-auto max-w-5xl px-5 md:px-8 py-14 md:py-28 text-center">
         <p className="english-band-label">Spoken English for all</p>
         <h2 className="english-band-headline mt-6">
           <span className="block">English</span>
@@ -29,7 +29,7 @@ export function SpokenEnglishBand() {
       </div>
 
       {/* Marquee strip — generous bottom padding so descenders (y, g, p) never clip */}
-      <div className="relative z-10 english-marquee pb-24 md:pb-28">
+      <div className="relative z-10 english-marquee pb-16 md:pb-28">
         <div className="english-marquee-track" aria-hidden="true">
           {trackItems.map((label, i) => (
             <span key={`${label}-${i}`} className="inline-flex items-center gap-[2.5rem]">

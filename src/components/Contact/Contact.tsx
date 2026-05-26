@@ -6,7 +6,7 @@ import { WhatsAppRibbon } from './WhatsAppRibbon';
 
 export function Contact() {
   return (
-    <section id="contact" className="relative py-20 md:py-24">
+    <section id="contact" className="relative py-14 md:py-24">
       <div className="mx-auto max-w-7xl px-5 md:px-8">
         <SectionHeader
           eyebrow="Visit us"
@@ -14,15 +14,14 @@ export function Contact() {
           lead="We're a short walk from Edamal Street junction. Drop in any weekday between 9 AM and 7 PM, or book a slot below — we'll keep ten minutes aside for you."
         />
 
+        {/* On mobile: form first (primary action), info+map below.
+            On lg: side-by-side, info+map left, form right. */}
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 mt-10 md:mt-14">
-          {/* Left: info + map */}
-          <div className="reveal">
+          <div className="reveal order-2 lg:order-1">
             <ContactInfo />
             <MapEmbed />
           </div>
-
-          {/* Right: booking form */}
-          <div className="reveal">
+          <div className="reveal order-1 lg:order-2">
             <BookingForm />
           </div>
         </div>

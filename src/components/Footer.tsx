@@ -4,23 +4,23 @@ import { CONTACT } from '@/data/contact';
 export function Footer() {
   return (
     <footer className="site-footer">
-      <div className="relative z-10 mx-auto max-w-7xl px-5 md:px-8 pt-16 md:pt-20 pb-8">
+      <div className="relative z-10 mx-auto max-w-7xl px-5 md:px-8 pt-12 md:pt-20 pb-8">
         {/* Top grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-10 md:gap-12 pb-12 md:pb-16">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 pb-10 md:pb-16">
 
           {/* Brand */}
-          <div className="col-span-2 md:col-span-1 max-w-xs">
+          <div className="col-span-2 md:col-span-1">
             <a href="#top" className="inline-flex items-center gap-2.5" aria-label="The Oxford Academy home">
               <img src="/feather.svg" alt="" aria-hidden="true" className="w-7 h-7" />
-              <span className="font-display italic font-medium text-cream text-[1.1rem] tracking-tight">
+              <span className="font-display italic font-medium text-cream text-[1.05rem] tracking-tight">
                 The Oxford Academy
               </span>
             </a>
-            <p className="mt-5 text-sm leading-relaxed text-cream/55">
+            <p className="mt-4 text-sm leading-relaxed text-cream/55 max-w-xs">
               Theni&rsquo;s home for English, excellence, and the future. Founded 2015 by
               M.&nbsp;Sneka, M.E. Communications.
             </p>
-            <p className="mt-6">
+            <p className="mt-5">
               <span className="footer-script">The Future.</span>
             </p>
           </div>
@@ -28,7 +28,7 @@ export function Footer() {
           {/* Courses */}
           <div>
             <p className="footer-col-label">Courses</p>
-            <ul className="mt-5 space-y-3">
+            <ul className="mt-4 space-y-2.5">
               {['Spoken English', 'IELTS', 'Placement', 'Programming', 'Home tuition'].map(
                 (item) => (
                   <li key={item}>
@@ -42,7 +42,7 @@ export function Footer() {
           {/* Academy */}
           <div>
             <p className="footer-col-label">Academy</p>
-            <ul className="mt-5 space-y-3">
+            <ul className="mt-4 space-y-2.5">
               <li><a href="#about"   className="footer-link">Our founder</a></li>
               <li><a href="#why"     className="footer-link">Why us</a></li>
               <li><a href="#contact" className="footer-link">Visit</a></li>
@@ -50,10 +50,10 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Reach Us */}
-          <div>
+          {/* Reach Us — full width on mobile */}
+          <div className="col-span-2 md:col-span-1">
             <p className="footer-col-label">Reach Us</p>
-            <ul className="mt-5 space-y-3">
+            <ul className="mt-4 space-y-2.5">
               <li>
                 <a href={`tel:${CONTACT.phone1}`} className="footer-link">
                   {CONTACT.phone1Display.replace('+91 ', '')}
@@ -65,17 +65,17 @@ export function Footer() {
                 </a>
               </li>
               <li className="text-cream/78 text-[0.94rem]">Edamal St, Theni</li>
-              <li className="text-cream/78 text-[0.94rem]">Mon &ndash; Sat &middot; 9&ndash;8</li>
+              <li className="text-cream/78 text-[0.94rem]">Mon – Sat · 9–8</li>
             </ul>
           </div>
         </div>
 
         {/* Bottom strip */}
-        <div className="border-t border-white/10 pt-6 flex flex-col md:flex-row md:items-center md:justify-between gap-5">
-          <p className="text-xs text-cream/50">
+        <div className="border-t border-white/10 pt-6 flex flex-col items-center gap-4 md:flex-row md:justify-between">
+          <p className="text-xs text-cream/50 text-center md:text-left">
             &copy; {new Date().getFullYear()} The Oxford Academy &middot; Theni, Tamil Nadu
           </p>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             <a
               href={CONTACT.instagramUrl}
               target="_blank"

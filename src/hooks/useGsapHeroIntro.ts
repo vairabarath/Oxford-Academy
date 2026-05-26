@@ -87,31 +87,15 @@ export function useGsapHeroIntro(refs: HeroRefs) {
     path.style.strokeDashoffset = String(pathLen);
     setRunning();
 
-    // ── Mobile: simplified entrance ──
-    if (!isDesktop()) {
-      gsap.fromTo(
-        lines,
-        { opacity: 0, y: 28 },
-        { opacity: 1, y: 0, duration: 0.7, stagger: 0.09, ease: 'power2.out', delay: 0.1 },
-      );
-      gsap.delayedCall(0.1 + lines.length * 0.09 + 0.1, () => {
-        path.style.strokeDashoffset = '0';
-        setDone();
-      });
-      const h = hero.getBoundingClientRect();
-      gsap.set(mover, { x: h.width - 120, y: 160, opacity: 0 });
-      gsap.set(fImg, { scale: 0.5, rotation: 0 });
-      gsap.to(mover, { opacity: 1, duration: 0.4, delay: 0.6 });
-      gsap.to(fImg, {
-        y: -8, rotation: -6, duration: 4, yoyo: true, repeat: -1, ease: 'sine.inOut', delay: 0.6,
-      });
-      return;
-    }
+    const mobile = !isDesktop();
 
-    // ── Desktop: full cinematic ──
+    // ── Shared setup ─────────────────────────────────────────────────────────
     gsap.set(lines, { opacity: 0, y: 28 });
     const tl = gsap.timeline();
     activeTlRef.current = tl;
+
+    // Feather scale: smaller on mobile so it doesn't dwarf the compact text
+    const featherScale = mobile ? 0.28 : 0.45;
 
     // Reveal headline lines
     tl.to(lines, { opacity: 1, y: 0, duration: 0.7, stagger: 0.09, ease: 'power2.out' }, 0);
@@ -120,16 +104,17 @@ export function useGsapHeroIntro(refs: HeroRefs) {
     tl.add(() => {
       const ps = pathPointPos(0);
       gsap.set(mover, { x: ps.x, y: ps.y });
-      gsap.set(fImg, { scale: 0.45, rotation: -20, y: 0, x: 0 });
+      gsap.set(fImg, { scale: featherScale, rotation: -20, y: 0, x: 0 });
     }, 0.28);
     tl.fromTo(mover, { opacity: 0 }, { opacity: 1, duration: 0.2, ease: 'power2.out' }, 0.3);
 
     // The writing: stroke + feather follow the path
-    tl.to(path, { strokeDashoffset: 0, duration: 2.6, ease: 'power1.inOut' }, 0.3);
+    const writeDur = mobile ? 2.2 : 2.6;
+    tl.to(path, { strokeDashoffset: 0, duration: writeDur, ease: 'power1.inOut' }, 0.3);
     tl.to(
       mover,
       {
-        duration: 2.6,
+        duration: writeDur,
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         motionPath: { path, align: path, alignOrigin: [0, 0], autoRotate: false } as any,
         ease: 'power1.inOut',
@@ -138,22 +123,37 @@ export function useGsapHeroIntro(refs: HeroRefs) {
     );
 
     // Cross-fade cursive → gradient italic
-    tl.add(setDone, 2.9);
+    tl.add(setDone, mobile ? 2.5 : 2.9);
 
-    // Lift and float to resting position
-    tl.to(mover, { y: '-=24', duration: 0.3, ease: 'power2.out' }, 3.0);
+    // Lift slightly then fly to resting position
+    tl.to(mover, { y: '-=24', duration: 0.3, ease: 'power2.out' }, mobile ? 2.6 : 3.0);
     tl.add(() => {
-      const r = restPos();
-      gsap.to(mover, { x: r.x, y: r.y, duration: 1.3, ease: 'power2.inOut' });
-      gsap.to(fImg, { scale: 1.15, rotation: -4, duration: 1.3, ease: 'power2.inOut' });
-    }, 3.1);
+      if (mobile) {
+        // On mobile: settle into top-right corner.
+        // The feather image is 260 × 470 px with transform-origin at the quill tip (≈ mover origin).
+        // At scale 0.25, rotation 12°, the rightmost point is ~81 px right of the mover.
+        // Placing mover at (width - 100) keeps ~19 px margin from the screen edge.
+        // The topmost point at y=120 is ~5 px below the section top — fully within bounds.
+        const h = hero.getBoundingClientRect();
+        gsap.to(mover, { x: h.width - 100, y: 120, duration: 1.1, ease: 'power2.inOut' });
+        gsap.to(fImg, { scale: 0.25, rotation: 12, duration: 1.1, ease: 'power2.inOut' });
+      } else {
+        // On desktop: fly to the right-column rest zone
+        const r = restPos();
+        gsap.to(mover, { x: r.x, y: r.y, duration: 1.3, ease: 'power2.inOut' });
+        gsap.to(fImg, { scale: 1.15, rotation: -4, duration: 1.3, ease: 'power2.inOut' });
+      }
+    }, mobile ? 2.75 : 3.1);
 
     // Idle float loop
     tl.add(() => {
-      gsap.to(fImg, {
-        y: -10, rotation: -8, duration: 4.2, yoyo: true, repeat: -1, ease: 'sine.inOut',
-      });
-    }, 4.5);
+      if (mobile) {
+        // Gentle vertical bob only — no rotation change so horizontal bounds stay fixed
+        gsap.to(fImg, { y: -4, duration: 3.5, yoyo: true, repeat: -1, ease: 'sine.inOut' });
+      } else {
+        gsap.to(fImg, { y: -10, rotation: -8, duration: 4.2, yoyo: true, repeat: -1, ease: 'sine.inOut' });
+      }
+    }, mobile ? 4.0 : 4.5);
   }, [refs, getPathLen, pathPointPos, restPos, setRunning, setDone]);
 
   // ── Effect: init + kick off ───────────────────────────────────────────────

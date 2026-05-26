@@ -8,7 +8,7 @@ const STATS = [
 export function HeroStats() {
   return (
     <dl
-      className="mt-12 md:mt-14 grid grid-cols-2 sm:grid-cols-4 gap-5 md:gap-7 max-w-2xl border-t border-ink/10 pt-6 md:pt-7"
+      className="mt-8 md:mt-14 grid grid-cols-2 sm:grid-cols-4 gap-5 md:gap-7 max-w-2xl border-t border-ink/10 pt-5 md:pt-7"
       data-line=""
     >
       {STATS.map(({ value, label, srLabel }) => (

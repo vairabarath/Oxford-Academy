@@ -28,7 +28,7 @@
 }
 
 /* ── Hero ── */
-.hero-stage { min-height: 90vh; }
+.hero-stage { min-height: 90vh; min-height: 90svh; }
 
 .hero-dots {
   background-image: radial-gradient(rgba(20, 20, 40, 0.10) 1px, transparent 1.2px);
@@ -277,6 +277,74 @@
   box-shadow: 0 0 18px 4px rgba(233, 30, 99, 0.3);
 }
 .course-card:hover .course-orb { opacity: 1; transform: scale(1); }
+
+/* ── Courses mobile scroll track ── */
+.course-scroll-track {
+  display: flex;
+  gap: 0.75rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;          /* Firefox */
+  padding-bottom: 4px;            /* room for card shadow */
+}
+.course-scroll-track::-webkit-scrollbar { display: none; }
+.course-scroll-item {
+  flex-shrink: 0;
+  width: 72vw;
+  max-width: 280px;
+  scroll-snap-align: start;
+}
+/* Featured card inside carousel — match standard card height */
+.course-scroll-item .course-card-featured {
+  min-height: 220px;
+  height: 100%;
+}
+
+/* Testimonial scroll item (wider than course cards — text-heavy) */
+.testimonial-scroll-item {
+  flex-shrink: 0;
+  width: 82vw;
+  max-width: 320px;
+  scroll-snap-align: start;
+}
+
+/* ── Mobile responsive overrides ── */
+@media (max-width: 767px) {
+  /* Why cards — compact 2-col layout */
+  .why-card {
+    padding: 18px 16px 20px;
+    min-height: unset;
+  }
+  .why-card .why-num {
+    font-size: 2.2rem;
+    margin-bottom: 14px;
+  }
+  .why-card h3 {
+    font-size: 1rem;
+  }
+  .why-card p {
+    font-size: 0.82rem;
+    margin-top: 8px;
+  }
+
+  /* Founder photo — less padding on mobile */
+  .founder-photo-wrap {
+    padding: 14px;
+  }
+
+  /* Contact info — bigger tap targets for phone links */
+  .contact-link {
+    font-size: 1rem;
+    padding: 2px 0;
+    display: inline-block;
+  }
+
+  /* Booking card — tighter on mobile */
+  .booking-card {
+    padding: 22px 20px 24px;
+  }
+}
 
 /* Featured card */
 .course-card-featured {
